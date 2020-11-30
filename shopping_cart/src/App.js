@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import Products from './components/Products';
 import Filter from './components/Filter';
-import { Button, Accordion } from 'react-bootstrap';
 import Basket from './components/Basket';
 
 class App extends Component {
@@ -65,6 +64,13 @@ class App extends Component {
 			return cartItems;
 		})
 	}
+	handleRemoveFromCart(e, item){
+		this.setState(state => {
+			const cartItems = state.cartItems.filter(elem => elem.id !== item.id);
+			localStorage.setItem('cartItems', cartItems);
+			return {cartItems};
+		});
+	}
 	render(){
 		return (
 			<div className="container">
@@ -75,8 +81,6 @@ class App extends Component {
 				<Filter size={this.state.size} sort={this.state.sort} handleChangeSize={this.handleChangeSize} handleChangeSource={this.handleChangeSort} count={this.state.filteredProducts.length} />
 				<hr/>
 					<Products products={this.state.filteredProducts} handleAddToCart={this.handleAddToCart}/>
-					<Button>Search by Price</Button> 
-					<Button>Search by Price</Button> 
 				</div>
 
 				<div className="col-md-4">
