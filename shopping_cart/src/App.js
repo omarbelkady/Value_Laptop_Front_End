@@ -23,6 +23,18 @@ class App extends Component {
 		// this.handleAddToCart = this.handleAddToCart.bind(this);
 	}
 
+
+	componentDidMount()
+	{
+		const URL = "http://localhost:3200/laptop/price/2000"
+		axios.get(URL)
+		.then(res =>
+		{
+		// console.log(res.data)
+		this.setState({data : Object.values(res.data)})
+		}).catch(err => console.log(err))
+	}
+
 	render(){
 		return (
 			<>
