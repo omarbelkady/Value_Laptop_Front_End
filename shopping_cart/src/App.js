@@ -1,94 +1,59 @@
 import { React,  Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+
 import Products from './components/Products';
 import Filter from './components/Filter';
 import Basket from './components/Basket';
 
+// import Products from './components/Products';
+// import Filter from './components/Filter';
+import  {Button, Accordion, Card}  from 'react-bootstrap';
+// import Card from 'react-bootstrap/Card'
+// import Basket from './components/Basket';
+import axios from 'axios';
+
+
 class App extends Component {
+	state = {data: []}
 	constructor(props){
 		super(props);
-		this.state= { products: [], filteredProducts: [], cartItem: []};
-		this.handleChangeSort = this.handleChangeSort.bind(this);
-		this.handleChangeSize = this.handleChangeSize.bind(this);
-		this.handleAddToCart = this.handleAddToCart.bind(this);
-	}
-	componentWillMount(){
-		fetch("http://100.115.92.2:8000/products").then( res => res.json())
-		.then(data => this.setState({
-			products: data,
-			filteredProducts: data
-		}));
-	}
-	handleChangeSort(e){
-		this.setState({sort: e.target.value});
-		this.listProducts();
+		// this.state= { products: [], filteredProducts: [], cartItem: []};
+		// this.handleChangeSort = this.handleChangeSort.bind(this);
+		// this.handleChangeSize = this.handleChangeSize.bind(this);
+		// this.handleAddToCart = this.handleAddToCart.bind(this);
 	}
 
-	handleChangeSize(e){
-		this.setState({size: e.target.value});
-		this.listProducts();
-	}
-	listProducts(){
-		this.setState(state => {
-			if(state.sort !== ''){
-				state.products.sort((a,b)=>(state.sort==='lowest') ?
-				(a.price > b.price ? 1:-1) : (a.price < b.price ? 1:-1))
-			}
-			else {
-				state.products.sort((a,b)=>(a.id < b.id ? 1:-1));
-			}
-			if(state.size !== ''){
-				return { filteredProducts: state.products.filter(a=> 
-					a.availableSizes.indexOf(state.size.toUpper) >= 0 
-				)}
-			}
-			return {filteredProducts:state.products};
-		})
-	}
-	handleAddToCart(e, product){
-		this.setState(state=> {
-			const cartItems = state.cartItems;
-			let productInCart = false
-			cartItems.forEach(item =>{
-				if(item.id === product.id){
-					productInCart = true;
-					item.count ++;
-				}
-			});
-			if(!productInCart){
-				cartItems.push({...product, count: 1});
-			}
-			/*save cart items*/
-			localStorage.setItems("cartItems",JSON.stringify(cartItems));
-			return cartItems;
-		})
-	}
-	handleRemoveFromCart(e, item){
-		this.setState(state => {
-			const cartItems = state.cartItems.filter(elem => elem.id !== item.id);
-			localStorage.setItem('cartItems', cartItems);
-			return {cartItems};
-		});
-	}
 	render(){
 		return (
-			<div className="container">
-			<h1 class="text-success"> Ecommerce Shopping Cart</h1>
-		  	<hr/>
-		  	<div className="row">
-				<div className="col-md-8">
-				<Filter size={this.state.size} sort={this.state.sort} handleChangeSize={this.handleChangeSize} handleChangeSort={this.handleChangeSort} count={this.state.filteredProducts.length} />
-				<hr/>
-					<Products products={this.state.filteredProducts} handleAddToCart={this.handleAddToCart}/>
-				</div>
-
-				<div className="col-md-4">
-					<Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart}/>
-				</div>
-    			</div>
+			<>
+			<div>
+			<Accordion>
+        {
+          this.state.data.map(laptop => 
+          {
+            return (
+            <Card align="left">
+              <Card.Header key={laptop._id}>
+                <Accordion.Toggle as={Button} variant="link" eventKey={laptop._id} >
+			<h3>{laptop.name} - ${laptop.price} :: {laptop.category}</h3>
+                </Accordion.Toggle>
+              </Card.Header>
+              
+              <Accordion.Collapse eventKey={laptop._id}>
+                <Card.Body>
+				<img src ={laptop.links.image} width="600" height = "400"></img>
+			<h6>CPU</h6> 
+			<p>{laptop.cpu}</p>
+                </Card.Body>
+              </Accordion.Collapse>
+            
+            </Card>
+            )})
+          }
+        </Accordion>
 
 			</div>
+			</>
 		);
 	}
 }
