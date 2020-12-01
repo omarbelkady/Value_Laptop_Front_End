@@ -9,7 +9,8 @@ class App extends Component
 	state = {data: []}
 	componentDidMount()
 	{
-		const URL = "http://localhost:3200/laptop/price/2000" // price needs to be a variable
+		let price = 2000// price needs to be a variable
+		const URL = `https://value-laptop-backend.herokuapp.com/laptop/price/${price}` 
 		axios.get(URL)
 		.then(res =>
 		{
@@ -31,7 +32,7 @@ class App extends Component
 					<Card align="left">
 					<Card.Header key={laptop._id}>
 						<Accordion.Toggle as={Button} variant="link" eventKey={laptop._id} >
-					<h3>{laptop.name} - ${laptop.price} :: {laptop.category}</h3>
+							<h3>{laptop.name} :: {laptop.category} - ${laptop.price}</h3>
 						</Accordion.Toggle>
 					</Card.Header>
 					
