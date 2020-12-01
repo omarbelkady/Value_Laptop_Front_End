@@ -1,0 +1,14 @@
+table
+{
+    border-spacing: 100;
+}
+td
+{
+    align-items: center;
+    vertical-align: top;
+    width: 1000;
+}
+ul
+{
+    list-style-type: none;
+}
