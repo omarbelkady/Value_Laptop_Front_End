@@ -1,32 +1,62 @@
 import { React,  Component } from 'react';
-import  {Button, Accordion, Card}  from 'react-bootstrap';
+import  {Button, Accordion, Card, Container}  from 'react-bootstrap';
 import './App.css'
 import axios from 'axios';
 
 
 class App extends Component 
 {
-	state = {data: []}
-	componentDidMount()
+
+	constructor()
 	{
-		let price = 2000// price needs to be a variable
-		const URL = `https://value-laptop-backend.herokuapp.com/laptop/price/${price}` 
+		super()
+		this.state = 
+		{
+			price: '0',
+			laptops: []
+		}
+	}
+	onChange = (event) => 
+	{
+		this.setState({price: event.target.value})
+		console.log(event.target.value)
+		console.log(this.state.price)
+		const URL = `https://value-laptop-backend.herokuapp.com/laptop/price/${event.target.value}` 
 		axios.get(URL)
 		.then(res =>
 		{
 			console.log(res.data)
-			this.setState({data : Object.values(res.data)})
+			this.setState({laptops : Object.values(res.data)})
+			console.log(this.state.laptops)
 		}).catch(err => console.log(err))
 	}
+	handleClear = () => 
+	{
+		this.setState({price: '0'})
+	}
+
 
 	render()
 	{
 		return (
 			<>
+			<Container>
+				<form onSubmit = {this.handleSubmit}>
+				<label> Laptop Price:
+					<input 
+					type = "text" 
+					name = "price" 
+					value = {this.state.price}
+					onChange ={this.onChange}
+					/>
+				</label>
+				<button className="btn btn-danger" type="submit" onClick={this.handleClear}>Clear</button>
+				</form>
+			</Container>
 			<div>
 				<Accordion>
 				{
-				this.state.data.map(laptop => 
+				this.state.laptops.map(laptop => 
 				{
 					return (
 					<Card align="left">
@@ -72,9 +102,7 @@ class App extends Component
 									</td>
 								</tr>
 							</tbody>
-						</table>
-						
-					
+						</table>					
 						</Card.Body>
 					</Accordion.Collapse>
 					
