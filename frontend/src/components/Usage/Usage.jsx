@@ -1,10 +1,10 @@
-import "./Price.css";
+import "./Usage.css";
 import React from "react";
 
 function template() {
   return (
-    <div className="price">
-      <h1>price</h1>
+    <div className="usage">
+      <h1>Usage</h1>
     </div>
   );
 };

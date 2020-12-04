@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.gap
+{
+  column-gap: 400px;
+}
+
+td 
+{
+  text-align: center;
+  vertical-align: middle;
+}
