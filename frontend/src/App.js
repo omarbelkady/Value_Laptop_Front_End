@@ -9,27 +9,30 @@ import Usage from './components/Usage/Usage'
 
 function App() {
   return (
+    <div className="bg-dark">
     <Router>
-    <div className="App">
-        <h1>Welcome to ValuePC. Select an option to get started.</h1>
-        <br/>
-        <table align="center" className="choices">
-          <thead>
-            <tr>
-              <Nav.Link href = "/price"><td><Button variant="info"><h3>Find a laptop within my budget</h3></Button></td></Nav.Link>
-              <td><div className="gap"></div></td>
-              <Nav.Link href = "/usage"><td><Button variant="success"><h3> Find a laptop that fits my usage</h3></Button></td></Nav.Link>
-            </tr>
-          </thead>
-        </table>
-      
-      
-    </div>
+      <div className="App">
+          <h1>Welcome to ValuePC. Select an option to get started.</h1>
+          <br/>
+          <table align="center" className="choices">
+            <thead>
+              <tr>
+                <Nav.Link href = "/price"><td><Button variant="primary"><h3>Find a laptop within my budget</h3></Button></td></Nav.Link>
+                <td><div className="gap"></div></td>
+                <Nav.Link href = "/usage"><td><Button variant="success"><h3> Find a laptop that fits my usage</h3></Button></td></Nav.Link>
+              </tr>
+            </thead>
+          </table>
+        
+        
+      </div>
+
     <Switch>
       <Route path="/price" exact component = {Price}/>
       <Route path="/usage" exact component = {Usage}/>
     </Switch>
     </Router>
+    </div>
   );
 }
 
