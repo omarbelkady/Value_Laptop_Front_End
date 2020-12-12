@@ -111,7 +111,7 @@ class Price extends React.Component
                             <li>
                             {
                               (laptop.storage.hdd) ===0 ? 
-                                <p>No NVME</p>: 
+                                <p>No HDD</p>: 
                                 (laptop.storage.hdd>=1000) ?
                                   <p>{laptop.storage.hdd /1000.0} TB HDD</p>:
                                   <p>{laptop.storage.hdd } GB HDD</p>
